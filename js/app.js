@@ -1,42 +1,42 @@
-$(document).foundation()
-
-
-var exampleSocket = new WebSocket("ws://www.example.com/socketserver", "protocolOne");
-
+var exampleSocket = new WebSocket("ws://localhost:8000");
+/*
 exampleSocket.onmessage = function(event) {
-  var f = document.getElementById("chatbox").contentDocument;
-  var text = "";
-  var msg = JSON.parse(event.data);
-  var time = new Date(msg.date);
-  var timeStr = time.toLocaleTimeString();
-  
-  switch(msg.type) {
-    case "id":
-      clientID = msg.id;
-      setUsername();
-      break;
-    case "username":
-      text = "<b>User <em>" + msg.name + "</em> signed in at " + timeStr + "</b><br>";
-      break;
-    case "message":
-      text = "(" + timeStr + ") <b>" + msg.name + "</b>: " + msg.text + "<br>";
-      break;
-    case "rejectusername":
-      text = "<b>Your username has been set to <em>" + msg.name + "</em> because the name you chose is in use.</b><br>"
-      break;
-    case "userlist":
-      var ul = "";
-      for (i=0; i < msg.users.length; i++) {
-        ul += msg.users[i] + "<br>";
-      }
-      document.getElementById("userlistbox").innerHTML = ul;
-      break;
-  }
-  
-  if (text.length) {
+    var f = document.getElementById("chatbox").contentDocument;
+    var text = "";
+    var msg = JSON.parse(event.data);
+
+    switch (msg.type) {
+        case "id":
+            clientID = msg.id;
+            setUsername();
+            break;
+    }
+    document.getElementById("userlistbox").innerHTML = ul;
+}
+
+if (text.length) {
     f.write(text);
     document.getElementById("chatbox").contentWindow.scrollByPages(1);
-  }
 };
-
+*/
 exampleSocket.close();
+
+for (var i=0; i<4;i++) {
+	var rando =parseInt(Math.random() * 100);
+	var color = "";
+	if (rando<=30){
+		color = "progress alert"	
+	}
+	if (rando>30 && rando<=70){
+		color = "progress warning"	
+	}
+	if (rando>70 && rando<=100){
+		color = "progress success"	
+	}
+
+	//25% placeholder for integer from 
+	document.getElementsByTagName("span")[i].setAttribute("style", ("width:" +rando +"%")); 
+	document.getElementsByClassName("progress-meter-text")[i].innerHTML=(rando+"%"); 
+	document.getElementsByClassName("progress")[i].className =color;
+
+}
