@@ -1,22 +1,22 @@
-//var exampleSocket = new WebSocket("ws://localhost:8000");
-var spanNumber = document.getElementsByTagName("span");
-var userNumber = document.getElementsByTagName("h5");
+var exampleSocket = new WebSocket("ws://10.31.72.32:8080");
+var spanNumber = document.getElementsByTagName("span").length; //6, span = progress meter
+var userNumber = document.getElementsByTagName("h5").length; // 2, users
 var rando = 0;
 var color = "";
 var metric = "concentration";
 var metricIndex = 0;
-var name = [];
-updateProgress();
-updateUsers();
+var users;
+var names;
 
-/*
 exampleSocket.onmessage = function(event) {
     var text = "";
     var msg = JSON.parse(event.data);
 
     switch (msg.type) {
         case "users":
-            name = msg.fullname;
+            users = msg.users;
+            console.log(users);
+            console.log(names);
             break;
         case "concentration":
             metric = msg.type;
@@ -28,38 +28,44 @@ exampleSocket.onmessage = function(event) {
             break;
     }
 };
-*/
-function generateRandom(){
-	rando = parseInt(Math.random() * 100);
+
+function generateRandom() {
+    rando = Math.round(Math.random() * 100);
 }
 
-function updateProgress(){
-	for (var i=0; i<spanNumber;i++) {
-		generateRandom();
+function colorize() {
+        generateRandom();
+        console.log("colorize call");
 
-		if (rando<=30){
-			color = "progress alert"	
-		}
-		if (rando>30 && rando<=70){
-			color = "progress warning"	
-		}
-		if (rando>70 && rando<=100){
-			color = "progress success"	
-		}
-
-		//25% placeholder for integer from 
-		document.getElementsByTagName("span")[i].setAttribute("style", ("width:" +rando +"%"));
-		document.getElementsByClassName("text")[i].innerHTML=metric; 
-		document.getElementsByClassName("progress-meter-text").querySelectorAll("p")[(metricIndex)].innerHTML=(rando+"%"); 
-		document.getElementsByClassName("progress")[i].querySelectorAll("span")[metricIndex].className = color;
-
-	}
+        if (rando <= 30) {
+            color = "progress alert"
+        } else if (rando > 30 && rando <= 70) {
+            color = "progress warning"
+        } else if (rando > 70 && rando <= 100) {
+            color = "progress success"
+        }
 }
 
-function updateUsers(){
-	for (var i=0; i<userNumber; i++)
-		document.getElementsByTagName("h5")[i].value = name[i];
+function updateProgressMellow() { //
+    for (var i = 0; i < spanNumber; i++) {
+    	colorize();
+
+        document.getElementsByTagName("span")[i].setAttribute("style", ("width:" + rando + "%"));
+        document.getElementsByClassName("progress-meter-text")[i].innerHTML = (rando + "%");
+        document.getElementsByClassName("progress")[i].className = color;
+    }
 }
+
+
+function updateUsers() {
+    for (var i = 0; i < userNumber; i++)
+        console.log("user call");
+    document.getElementsByTagName("h5")[i].value = users[i];
+}
+
+updateProgressMellow();
+updateUsers();
+
+
 
 //exampleSocket.close();
-
