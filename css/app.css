@@ -1,8 +1,8 @@
-p,h3,li{
-	font-family: 'Source Sans Pro', Helvetica, sans-serif;
-	}
-.top-bar{
-	margin:0.5rem;
-	background-color: #FFFFFF;
+body {
+  font-family: 'Source Sans Pro', Helvetica, sans-serif;
+  padding: 0px 40px;
 }
 
+#header {
+  padding: 5px 40px;
+}
