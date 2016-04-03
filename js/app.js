@@ -12,7 +12,7 @@ $(document).ready(function() {
       setMetrics(msg);
     }
   };
-  
+
   setBarColor($('#average-concentration'), 50);
   setBarColor($('#average-mellowness'), 50);
 });
@@ -44,7 +44,9 @@ function setMetrics(packet) {
   var value = Math.round(packet.value * 100)
   $('#' + packet.type + '-' + username + ' .progress-meter').animate({
     width: value + '%'
-  }, {queue: false});
+  }, {
+    queue: false
+  });
   $('#' + packet.type + '-' + username + ' .progress-meter p').text(value + '%');
 
   currentMetrics[packet.type][username] = packet.value;
@@ -53,11 +55,13 @@ function setMetrics(packet) {
 }
 
 function setAverages(type) {
-  var mean = Math.round(math.mean(_.values(currentMetrics[type]))*100);
+  var mean = Math.round(math.mean(_.values(currentMetrics[type])) * 100);
   $('#average-' + type + ' .progress-meter p').text(mean + '%');
   $('#average-' + type + ' .progress-meter').animate({
     width: mean + '%'
-  }, {queue: false});
+  }, {
+    queue: false
+  });
   setBarColor($('#average-' + type), mean, type);
 }
 
@@ -65,23 +69,23 @@ function setBarColor(bar, value, type) {
   var style = 'progress';
   if (value <= 30) {
     style += ' alert';
-    
+
     if (type === 'concentration') {
       bar.parent().removeClass('primary').addClass('alert');
     }
   } else if (value > 30 && value <= 70) {
     style += ' warning';
-    
+
     if (type === 'concentration') {
       bar.parent().removeClass('alert').addClass('primary');
     }
   } else if (value > 70 && value <= 100) {
     style += ' success';
-    
+
     if (type === 'concentration') {
       bar.parent().removeClass('alert').addClass('primary');
     }
   }
-  
+
   bar.prop('class', style);
 }
